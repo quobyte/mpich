@@ -7,7 +7,7 @@
 
 #include "adio.h"
 
-static const char *flock_cmd_to_string(int cmd)
+const char *flock_cmd_to_string(int cmd)
 {
     switch (cmd) {
 #ifdef F_GETLK64
@@ -36,7 +36,7 @@ static const char *flock_cmd_to_string(int cmd)
     }
 }
 
-static const char *flock_type_to_string(int type)
+const char *flock_type_to_string(int type)
 {
     switch (type) {
         case F_RDLCK:

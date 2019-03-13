@@ -146,6 +146,9 @@ typedef struct ADIOI_Fl_node {
 #ifdef ROMIO_PVFS2
 #include <pvfs2.h>
 #endif
+#ifdef ROMIO_QUOBYTEFS
+#include "quobyte.h"
+#endif
 #ifdef ROMIO_DAOS
 #include <daos_types.h>
 #endif
@@ -158,6 +161,9 @@ typedef struct ADIOI_AIO_req_str {
     /* should probably make this a union */
 #ifdef ROMIO_HAVE_WORKING_AIO
     struct aiocb *aiocbp;
+#ifdef ROMIO_QUOBYTEFS
+    struct quobyte_io_event *qaiocbp;
+#endif
 #endif
 #ifdef ROMIO_PVFS2
     PVFS_sys_op_id op_id;
@@ -857,6 +863,8 @@ int MPIOI_File_iread_all(MPI_File fh,
         ADIOI_UNLOCK_FUNC(fd, offset, whence, len)
 #endif
 
+const char *flock_cmd_to_string(int cmd);
+const char *flock_type_to_string(int type);
 int ADIOI_GEN_SetLock(ADIO_File fd, int cmd, int type, ADIO_Offset offset, int whence,
                       ADIO_Offset len);
 int ADIOI_GEN_SetLock64(ADIO_File fd, int cmd, int type, ADIO_Offset offset, int whence,
